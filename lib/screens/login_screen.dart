@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../services/auth_service.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -64,7 +66,23 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _submitButton() {
     return ElevatedButton(
-      onPressed: signInWithEmailAndPassword,
+      onPressed: () async {
+        var connectivityResult = await (Connectivity().checkConnectivity());
+
+        if (connectivityResult.contains(ConnectivityResult.none)) {
+          Fluttertoast.showToast(
+            msg:
+                "No network connection. Please connect to a network and try again.",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: const Color.fromARGB(255, 4, 74, 100),
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+        } else {
+          signInWithEmailAndPassword();
+        }
+      },
       child: const Text('Login'),
     );
   }
