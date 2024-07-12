@@ -13,6 +13,13 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   String? errorMessage = '';
+  bool _isPasswordVisible = false;
+
+  void tooglePasswordVisibility() {
+    setState(() {
+      _isPasswordVisible = !_isPasswordVisible;
+    });
+  }
   // bool isLogin = true;
 
   final TextEditingController _controllerEmail = TextEditingController();
@@ -36,26 +43,80 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _entryField(
-    String title,
     TextEditingController controller,
   ) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
-        labelText: title,
+        filled: true,
+        fillColor: Colors.black,
+        hintText: 'Email',
+        hintStyle: const TextStyle(
+          color: Colors.grey,
+          fontSize: 18,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(
+            color: Colors.white,
+            // width: 2,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(
+            color: Colors.white,
+            width: 0.5,
+          ),
+        ),
+        labelStyle: const TextStyle(
+          color: Colors.white,
+        ),
       ),
     );
   }
 
   Widget _entryFieldPassword(
-    String title,
     TextEditingController controller,
   ) {
-    return TextField(
+    return TextFormField(
       controller: controller,
-      obscureText: true,
+      obscureText: !_isPasswordVisible,
       decoration: InputDecoration(
-        labelText: title,
+        suffixIcon: IconButton(
+          icon: Icon(
+            _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+            color: Colors.white,
+          ),
+          onPressed: tooglePasswordVisibility,
+        ),
+        filled: true,
+        fillColor: Colors.black,
+        hintText: 'Password',
+        hintStyle: const TextStyle(
+          color: Colors.grey,
+          fontSize: 18,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(
+            color: Colors.white,
+            // width: 2,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(
+            color: Colors.white,
+            width: 0.5,
+          ),
+        ),
+        labelStyle: const TextStyle(
+          color: Colors.white,
+        ),
+      ),
+      style: const TextStyle(
+        color: Colors.white,
       ),
     );
   }
@@ -65,25 +126,39 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _submitButton() {
-    return ElevatedButton(
-      onPressed: () async {
-        var connectivityResult = await (Connectivity().checkConnectivity());
+    return SizedBox(
+      width: 150,
+      height: 50,
+      child: ElevatedButton(
+        onPressed: () async {
+          var connectivityResult = await (Connectivity().checkConnectivity());
 
-        if (connectivityResult.contains(ConnectivityResult.none)) {
-          Fluttertoast.showToast(
-            msg:
-                "No network connection. Please connect to a network and try again.",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: const Color.fromARGB(255, 4, 74, 100),
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-        } else {
-          signInWithEmailAndPassword();
-        }
-      },
-      child: const Text('Login'),
+          if (connectivityResult.contains(ConnectivityResult.none)) {
+            Fluttertoast.showToast(
+              msg:
+                  "No network connection. Please connect to a network and try again.",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: const Color.fromARGB(255, 4, 74, 100),
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+          } else {
+            signInWithEmailAndPassword();
+          }
+        },
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+        ),
+        child: const Text(
+          'Log In',
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
     );
   }
 
@@ -109,12 +184,12 @@ class _LoginPageState extends State<LoginPage> {
               style: TextStyle(fontSize: 30),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: _entryField('email', _controllerEmail),
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+              child: _entryField(_controllerEmail),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: _entryFieldPassword('password', _controllerPassword),
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+              child: _entryFieldPassword(_controllerPassword),
             ),
             _errorMessage(),
             _submitButton(),
