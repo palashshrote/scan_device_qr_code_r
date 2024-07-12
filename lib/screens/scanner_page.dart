@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:scan_device_qr_code/screens/result_page_pravah.dart';
 import '../screens/result_page.dart';
 import '../screens/bad_response.dart';
 import 'dart:convert';
 
 class ScannerPage extends StatefulWidget {
-  const ScannerPage({super.key});
-
+  const ScannerPage({super.key, required this.starrDevice});
+  final bool starrDevice;
   @override
   _ScannerPageState createState() => _ScannerPageState();
 }
 
 class _ScannerPageState extends State<ScannerPage> {
+  late bool _starrDevice;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR'); // key helps identifying
   QRViewController? controller; //controlling the state of camera view
   Barcode?
@@ -21,6 +23,12 @@ class _ScannerPageState extends State<ScannerPage> {
   //  format will be used for storing code type
 
   bool _isScanning = true; //identifying current state of camera
+
+  @override
+  void initState() {
+    super.initState();
+    _starrDevice = widget.starrDevice;
+  }
 
   @override
   void reassemble() {
@@ -138,11 +146,19 @@ class _ScannerPageState extends State<ScannerPage> {
           } else {
             //received JSON and calling ResultPage passing response as
             //a parameter for displaying the results
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ResultPage(data: response)),
-            );
+            if (_starrDevice == true) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ResultPage(data: response)),
+              );
+            } else {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ResultPagePravah(data: response)),
+              );
+            }
           }
         }
       }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scan_device_qr_code/screens/select_device.dart';
 import '../services/auth_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -73,8 +74,12 @@ class _HomePageState extends State<HomePage> {
                   } else {
                     Navigator.push(
                       context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) => const ScannerPage()),
+                      // );
                       MaterialPageRoute(
-                          builder: (context) => const ScannerPage()),
+                        builder: (context) => const SelectDevice(),
+                      ),
                     );
                   }
                 },
