@@ -15,15 +15,16 @@ class ResultPage extends StatelessWidget {
     var fof = filterOut.feeds;
     var chnl = filterOut.channel;
 
-    if (filterOut.feeds![0].field1 != null &&
-        filterOut.feeds![0].field2 != null) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('Result'),
-        ),
-        body: qrInterchangeStarr(),
-      );
-    } else if (filterOut.feeds == null) {
+    // if (filterOut.feeds![0].field1 != null &&
+    //     filterOut.feeds![0].field2 != null) {
+    //   return Scaffold(
+    //     appBar: AppBar(
+    //       title: const Text('Result'),
+    //     ),
+    //     body: qrInterchangeStarr(),
+    //   );
+    // } else
+    if (filterOut.feeds == null) {
       return Scaffold(
         appBar: AppBar(
           title: const Text('Result'),
@@ -149,16 +150,16 @@ class Feeds {
   int? entryId;
   String? field6;
   String? field7;
-  String? field1;
-  String? field2;
+  // String? field1;
+  // String? field2;
 
   Feeds({
     this.createdAt,
     this.entryId,
     this.field6,
     this.field7,
-    this.field1,
-    this.field2,
+    // this.field1,
+    // this.field2,
   });
 
   Feeds.fromJson(Map<String, dynamic> json) {
@@ -166,8 +167,8 @@ class Feeds {
     entryId = json['entry_id'];
     field6 = json['field6'];
     field7 = json['field7'];
-    field1 = json['field1'];
-    field2 = json['field2'];
+    // field1 = json['field1'];
+    // field2 = json['field2'];
   }
 }
 

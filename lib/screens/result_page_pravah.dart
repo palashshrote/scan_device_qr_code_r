@@ -14,15 +14,16 @@ class ResultPagePravah extends StatelessWidget {
     // var fof = filterOut.feeds;
     var chnl = filterOut.channel;
 
-    if (filterOut.feeds![0].field1 == null &&
-        filterOut.feeds![0].field2 == null) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('Result'),
-        ),
-        body: qrInterchangePravah(),
-      );
-    } else if (filterOut.feeds == null) {
+    // if (filterOut.feeds![0].field1 == null &&
+    //     filterOut.feeds![0].field2 == null) {
+    //   return Scaffold(
+    //     appBar: AppBar(
+    //       title: const Text('Result'),
+    //     ),
+    //     body: qrInterchangePravah(),
+    //   );
+    // } else
+    if (filterOut.feeds == null) {
       return Scaffold(
         appBar: AppBar(
           title: const Text('Result'),
