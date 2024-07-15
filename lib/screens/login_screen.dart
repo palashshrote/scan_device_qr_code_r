@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../services/auth_service.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
+// import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginPage extends StatefulWidget {
@@ -131,9 +132,10 @@ class _LoginPageState extends State<LoginPage> {
       height: 50,
       child: ElevatedButton(
         onPressed: () async {
-          var connectivityResult = await (Connectivity().checkConnectivity());
+          // var connectivityResult = await (Connectivity().checkConnectivity());
+          // bool result = await InternetConnection().hasInternetAccess;
 
-          if (connectivityResult.contains(ConnectivityResult.none)) {
+          if (!(await InternetConnection().hasInternetAccess)) {
             Fluttertoast.showToast(
               msg:
                   "No network connection. Please connect to a network and try again.",
