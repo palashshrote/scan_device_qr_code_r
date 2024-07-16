@@ -8,7 +8,7 @@ class InterchangeQr extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Interchange"),
+        title: Text("Result"),
       ),
       body: Wbody,
     );
