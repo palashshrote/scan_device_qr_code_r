@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:scan_device_qr_code/constants/qr_interchange.dart';
+import 'package:scan_device_qr_code/screens/interchange_qr.dart';
 import 'package:scan_device_qr_code/screens/result_page_pravah.dart';
 import '../screens/result_page.dart';
 import '../screens/bad_response.dart';
@@ -123,8 +125,8 @@ class _ScannerPageState extends State<ScannerPage> {
         //The 1st part is channelId, 2nd ReadApi, 3rd WriteApi
         String? qrData = scanData.code;
         List<String>? parts = qrData?.split('&');
-        if (parts!.length < 3) {
-          //if user don't get above 3 info ==> then user've scanned wrong qr
+        if (parts!.length < 4) {
+          //if user don't get 4 info ==> then user've scanned wrong qr
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const BadResponse()),
@@ -134,6 +136,7 @@ class _ScannerPageState extends State<ScannerPage> {
           String cId = parts[0];
           String readApi = parts[1];
           String writeApi = parts[2];
+          String deviceType = parts[3];
 
           //storing http request using fetchApiData in variable
           var response = await fetchApiData(cId, readApi, writeApi);
@@ -147,17 +150,41 @@ class _ScannerPageState extends State<ScannerPage> {
             //received JSON and calling ResultPage passing response as
             //a parameter for displaying the results
             if (_starrDevice == true) {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ResultPage(data: response)),
-              );
+              if (deviceType == "sTaRrHyDrOwVeRiFsTrInG") {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ResultPage(data: response),
+                  ),
+                );
+              } else {
+                //Not a star device
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        InterchangeQr(Wbody: qrInterchangeStarr()),
+                  ),
+                );
+              }
             } else {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ResultPagePravah(data: response)),
-              );
+              if (deviceType == "pRaVaHhYdRoWvErIfStRiNg") {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ResultPagePravah(data: response),
+                  ),
+                );
+              } else {
+                //Not a pravah device
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        InterchangeQr(Wbody: qrInterchangePravah()),
+                  ),
+                );
+              }
             }
           }
         }

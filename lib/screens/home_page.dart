@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scan_device_qr_code/screens/select_device.dart';
 import '../services/auth_service.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
+// import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../screens/scanner_page.dart';
 
@@ -58,10 +59,12 @@ class _HomePageState extends State<HomePage> {
                 //functionality of button when tapped that is it should route to scanner_page
                 onPressed: () async {
                   //for checking network connectivity
-                  var connectivityResult =
-                      await (Connectivity().checkConnectivity());
+                  // var connectivityResult =
+                  //     await (Connectivity().checkConnectivity());
+                  // if (connectivityResult.contains(ConnectivityResult.none))
+                  // bool result = await InternetConnection().hasInternetAccess;
 
-                  if (connectivityResult.contains(ConnectivityResult.none)) {
+                  if (!(await InternetConnection().hasInternetAccess)) {
                     Fluttertoast.showToast(
                       msg:
                           "No network connection. Please connect to a network and try again.",
