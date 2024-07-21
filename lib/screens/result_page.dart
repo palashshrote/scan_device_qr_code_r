@@ -130,7 +130,7 @@ class FilterOut {
       try {
         Channel.fromJson(json['channel']);
       } catch (e) {
-        print("Error is $e");
+        // print("Error is $e");
       }
       channel = Channel.fromJson(json['channel']);
     }
