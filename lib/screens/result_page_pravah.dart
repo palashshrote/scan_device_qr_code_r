@@ -80,11 +80,11 @@ class ResultPagePravah extends StatelessWidget {
                             style: contentStyle,
                           ),
                           Text(
-                            'Total flow: ${filterOut.feeds![index].field1}',
+                            'Total flow: ${filterOut.feeds![index].field1} L',
                             style: contentStyle,
                           ),
                           Text(
-                            'Flow rate: ${filterOut.feeds![index].field2}',
+                            'Flow rate: ${filterOut.feeds![index].field2} kL/hr',
                             style: contentStyle,
                           ),
                         ],
