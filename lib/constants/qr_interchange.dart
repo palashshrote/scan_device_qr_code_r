@@ -17,3 +17,12 @@ Widget qrInterchangeStarr() {
     ),
   );
 }
+
+Widget qrInterchangeDbore() {
+  return const Center(
+    child: Text(
+      'This isn\'t a Dbore device',
+      style: TextStyle(fontSize: 20),
+    ),
+  );
+}

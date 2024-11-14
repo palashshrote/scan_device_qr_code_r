@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:scan_device_qr_code/constants/constants.dart';
-import 'package:scan_device_qr_code/constants/empty_feed.dart';
-import 'package:scan_device_qr_code/constants/qr_interchange.dart';
 import 'epoch_computation.dart';
+import '../constants/constants.dart';
+import '../constants/empty_feed.dart';
+import '../constants/qr_interchange.dart';
 
-class ResultPagePravah extends StatelessWidget {
-  const ResultPagePravah({super.key, required this.data});
+class ResultPageDbore extends StatelessWidget {
+  const ResultPageDbore({super.key, required this.data});
   final Map<String, dynamic> data;
 
   @override
   Widget build(BuildContext context) {
     FilterOut filterOut = FilterOut.fromJson(data);
-    // var fof = filterOut.feeds;
     var chnl = filterOut.channel;
-
     if (filterOut.feeds == null) {
       return Scaffold(
         appBar: AppBar(
@@ -71,11 +69,7 @@ class ResultPagePravah extends StatelessWidget {
                             style: contentStyle,
                           ),
                           Text(
-                            'Total flow: ${filterOut.feeds![index].field1} L',
-                            style: contentStyle,
-                          ),
-                          Text(
-                            'Flow rate: ${filterOut.feeds![index].field2} kL/hr',
+                            'Distance: ${filterOut.feeds![index].field1} L',
                             style: contentStyle,
                           ),
                         ],
@@ -122,14 +116,14 @@ class Feeds {
   String? createdAt;
   int? entryId;
   String? field1;
-  String? field2;
+  // String? field2;
 
-  Feeds({this.createdAt, this.entryId, this.field1, this.field2});
+  // Feeds({this.createdAt, this.entryId, this.field1, this.field2});
+  Feeds({this.createdAt, this.entryId, this.field1});
   Feeds.fromJson(Map<String, dynamic> json) {
     createdAt = json['created_at'];
     entryId = json['entry_id'];
     field1 = json['field1'];
-    field2 = json['field2'];
   }
 }
 

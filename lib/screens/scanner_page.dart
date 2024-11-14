@@ -4,20 +4,24 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:scan_device_qr_code/constants/qr_interchange.dart';
 import 'package:scan_device_qr_code/screens/interchange_qr.dart';
+import 'package:scan_device_qr_code/screens/result_page_dbore.dart';
 import 'package:scan_device_qr_code/screens/result_page_pravah.dart';
 import '../screens/result_page.dart';
 import '../screens/bad_response.dart';
 import 'dart:convert';
 
 class ScannerPage extends StatefulWidget {
-  const ScannerPage({super.key, required this.starrDevice});
+  const ScannerPage(
+      {super.key, required this.starrDevice, required this.deviceType});
   final bool starrDevice;
+  final String deviceType;
   @override
   _ScannerPageState createState() => _ScannerPageState();
 }
 
 class _ScannerPageState extends State<ScannerPage> {
   late bool _starrDevice;
+  late String _deviceType;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR'); // key helps identifying
   QRViewController? controller; //controlling the state of camera view
   Barcode?
@@ -30,6 +34,7 @@ class _ScannerPageState extends State<ScannerPage> {
   void initState() {
     super.initState();
     _starrDevice = widget.starrDevice;
+    _deviceType = widget.deviceType;
   }
 
   @override
@@ -136,7 +141,7 @@ class _ScannerPageState extends State<ScannerPage> {
           String cId = parts[0];
           String readApi = parts[1];
           String writeApi = parts[2];
-          String deviceType = parts[3];
+          String diffString = parts[3];
 
           //storing http request using fetchApiData in variable
           var response = await fetchApiData(cId, readApi, writeApi);
@@ -149,8 +154,9 @@ class _ScannerPageState extends State<ScannerPage> {
           } else {
             //received JSON and calling ResultPage passing response as
             //a parameter for displaying the results
-            if (_starrDevice == true) {
-              if (deviceType == "sTaRrHyDrOwVeRiFsTrInG") {
+            // if (_starrDevice == true) {
+            if (_deviceType == "starr") {
+              if (diffString == "sTaRrHyDrOwVeRiFsTrInG") {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -167,8 +173,8 @@ class _ScannerPageState extends State<ScannerPage> {
                   ),
                 );
               }
-            } else {
-              if (deviceType == "pRaVaHhYdRoWvErIfStRiNg") {
+            } else if (_deviceType == "pravah") {
+              if (diffString == "pRaVaHhYdRoWvErIfStRiNg") {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -182,6 +188,24 @@ class _ScannerPageState extends State<ScannerPage> {
                   MaterialPageRoute(
                     builder: (context) =>
                         InterchangeQr(Wbody: qrInterchangePravah()),
+                  ),
+                );
+              }
+            } else if (_deviceType == "dbore") {
+              if (diffString == "db") {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ResultPageDbore(data: response),
+                  ),
+                );
+              } else {
+                //Not a pravah device
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        InterchangeQr(Wbody: qrInterchangeDbore()),
                   ),
                 );
               }
