@@ -43,6 +43,7 @@ class SelectDevice extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) => const ScannerPage(
                                 starrDevice: false,
+                                deviceType: "pravah",
                               ),
                             ),
                           );
@@ -65,13 +66,35 @@ class SelectDevice extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const ScannerPage(starrDevice: true),
+                                  const ScannerPage(starrDevice: true, deviceType: "starr",),
                             ),
                           );
                         },
                         style: devButtonStyle,
                         child: Text(
                           'Starr',
+                          style: devTextStyle,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: 160,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const ScannerPage(starrDevice: true, deviceType: "dbore",),
+                            ),
+                          );
+                        },
+                        style: devButtonStyle,
+                        child: Text(
+                          'Dbore',
                           style: devTextStyle,
                         ),
                       ),
